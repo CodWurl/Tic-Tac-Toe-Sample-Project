@@ -1,60 +1,49 @@
+.game-board {
+	width: 400px;
+	height: 400px;
+	margin: 0 auto;
+	background-color: #34495e;
+	color: #fff;
+	border: 6px solid #2c3e50;
+	border-radius: 10px;
 
-	/* CSS Code */
-	/* Heading */
-	h1 {
-		color: orangered;
-		font-size: 45px;
-	}
+	display: grid;
+	grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+}
 
-	/* 3*3 Grid */
-	#b1, #b2, #b3, #b4, #b5,
-	#b6, #b7, #b8, #b9 {
-		width: 80px;
-		height: 52px;
-		margin: auto;
-		border: 1px solid gray;
-		border-radius: 6px;
-		font-size: 30px;
-		text-align: center;
-	}
+.box {
+	border: 6px solid #2c3e50;
+	border-radius: 2px;
+	font-family: Helvetica;
+	font-weight: bold;
+	font-size: 4em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-	/* Reset Button */
-	#but {
-		box-sizing: border-box;
-		width: 95px;
-		height: 40px;
-		border: 1px solid dodgerblue;
-		margin: auto;
-		border-radius: 4px;
-		font-family: Verdana,
-			Geneva, Tahoma, sans-serif;
+/* Player turn space */
+#print {
+	font-family: Verdana,
+		Geneva, Tahoma, sans-serif;
 
-		background-color: dodgerblue;
-		color: white;
-		font-size: 20px;
-		cursor: pointer;
-	}
+	color: dodgerblue;
+	font-size: 20px;
+}
 
-	/* Player turn space */
-	#print {
-		font-family: Verdana,
-			Geneva, Tahoma, sans-serif;
+/* Reset Button */
+#but {
+	box-sizing: border-box;
+	width: 95px;
+	height: 40px;
+	border: 1px solid dodgerblue;
+	margin: auto;
+	border-radius: 4px;
+	font-family: Verdana,
+		Geneva, Tahoma, sans-serif;
 
-		color: dodgerblue;
-		font-size: 20px;
-	}
-
-	/* Main Container */
-	#main {
-		text-align: center;
-	}
-
-	/* Game Instruction Text */
-	#ins {
-		font-family: Verdana,
-			Geneva, Tahoma, sans-serif;
-			
-		color: dodgerblue;
-		font-size: 17px;
-	}
-
+	background-color: rgb(23, 23, 23);
+	color: white;
+	font-size: 20px;
+	cursor: pointer;
+}
