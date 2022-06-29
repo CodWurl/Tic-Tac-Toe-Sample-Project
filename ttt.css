@@ -3,7 +3,7 @@
 	height: 400px;
 	margin: 0 auto;
 	background-color: #34495e;
-	color: #fff;
+	color: rgb(144, 124, 124);
 	border: 6px solid #2c3e50;
 	border-radius: 10px;
 
@@ -42,7 +42,7 @@
 		Geneva, Tahoma, sans-serif;
 
 	background-color: rgb(23, 23, 23);
-	color: white;
+	color: rgb(141, 30, 30);
 	font-size: 20px;
 	cursor: pointer;
 }
