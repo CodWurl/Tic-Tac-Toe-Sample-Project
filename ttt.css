@@ -48,6 +48,6 @@
 	cursor: pointer;
 }
 
-.background-image {
-	background-image: url(https://unsplash.com/s/photos/universe/path/to/image.png);
+.body {
+	background-image: url("images/sunset.png");
 }

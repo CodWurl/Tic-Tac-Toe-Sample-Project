@@ -4,7 +4,7 @@ console.log(gameBoard);
 let player1 = { player: 0, value: 'X' };
 let player2 = { player: 1, value: 'O' };
 
-let matrix = [
+let matrix = ['x','O'
 	['0', '1', '2'],
 	['3', '4', '5'],
 	['6', '7', '8'],
@@ -25,6 +25,22 @@ gameBoard.addEventListener('click', function (e) {
 	}
 	turn = !turn;
 })
+
+/*function game_overQ()
+  {
+    gameBoard.winner = '?'; // Assume the outcome is in doubt, then check.
+    return winnerQ(0,1,2)  // check for 3-in-a-row horizontally
+       ||  winnerQ(3,4,5) 
+       ||  winnerQ(6,7,8) 
+       ||  winnerQ(0,3,6)  // check for 3-in-a-row vertically
+       ||  winnerQ(1,4,7) 
+       ||  winnerQ(2,5,8) 
+       ||  winnerQ(0,4,8)  // check for 3-in-a-row diagonally
+       ||  winnerQ(6,4,2)
+       ||  stalemateQ();   // check for win by 'cat'
+  }*/
+
+  
 
 
 // Checking if Player X won or not and after
