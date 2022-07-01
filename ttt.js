@@ -1,292 +1,89 @@
-let gameBoard = document.getElementById('board');
-console.log(gameBoard);
-
-let player1 = { player: 0, value: 'X' };
-let player2 = { player: 1, value: 'O' };
-
-let matrix = ['x','O'
-	['0', '1', '2'],
-	['3', '4', '5'],
-	['6', '7', '8'],
+const X_CLASS = 'x'
+const CIRCLE_CLASS = 'circle'
+const WINNING_COMBINATIONS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
 ]
+const cellElements = document.querySelectorAll('[data-cell]')
+const board = document.getElementById('board')
+const winningMessageElement = document.getElementById('winningMessage')
+const restartButton = document.getElementById('restartButton')
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
+let circleTurn
 
-let turn = true;
+startGame()
 
-gameBoard.addEventListener('click', function (e) {
-	if (e.target.innerText) {
-		return;
-	}
-	else {
-		if (turn) {
-			e.target.innerText = player1.value;
-		} else {
-			e.target.innerText = player2.value;
-		}
-	}
-	turn = !turn;
-})
+restartButton.addEventListener('click', startGame)
 
-/*function game_overQ()
-  {
-    gameBoard.winner = '?'; // Assume the outcome is in doubt, then check.
-    return winnerQ(0,1,2)  // check for 3-in-a-row horizontally
-       ||  winnerQ(3,4,5) 
-       ||  winnerQ(6,7,8) 
-       ||  winnerQ(0,3,6)  // check for 3-in-a-row vertically
-       ||  winnerQ(1,4,7) 
-       ||  winnerQ(2,5,8) 
-       ||  winnerQ(0,4,8)  // check for 3-in-a-row diagonally
-       ||  winnerQ(6,4,2)
-       ||  stalemateQ();   // check for win by 'cat'
-  }*/
-
-  
-
-
-// Checking if Player X won or not and after
-// that disabled all the other fields
-/*if ((box == 'x' || box == 'X') && (box == 'x' ||
-	box == 'X') && (b3 == 'x' || b3 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b1 == 'x' || b1 == 'X') && (b4 == 'x' ||
-	b4 == 'X') && (b7 == 'x' || b7 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-
-	window.alert('Player X won');
-}
-else if ((b7 == 'x' || b7 == 'X') && (b8 == 'x' ||
-	b8 == 'X') && (b9 == 'x' || b9 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b3 == 'x' || b3 == 'X') && (b6 == 'x' ||
-	b6 == 'X') && (b9 == 'x' || b9 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b1 == 'x' || b1 == 'X') && (b5 == 'x' ||
-	b5 == 'X') && (b9 == 'x' || b9 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b3 == 'x' || b3 == 'X') && (b5 == 'x' ||
-	b5 == 'X') && (b7 == 'x' || b7 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b2 == 'x' || b2 == 'X') && (b5 == 'x' ||
-	b5 == 'X') && (b8 == 'x' || b8 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
-}
-else if ((b4 == 'x' || b4 == 'X') && (b5 == 'x' ||
-	b5 == 'X') && (b6 == 'x' || b6 == 'X')) {
-	document.getElementById('print')
-		.innerHTML = "Player X won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player X won');
+function startGame() {
+  circleTurn = false
+  cellElements.forEach(cell => {
+    cell.classList.remove(X_CLASS)
+    cell.classList.remove(CIRCLE_CLASS)
+    cell.removeEventListener('click', handleClick)
+    cell.addEventListener('click', handleClick, { once: true })
+  })
+  setBoardHoverClass()
+  winningMessageElement.classList.remove('show')
 }
 
-// Checking of Player X finish
-// Checking for Player 0 starts, Is player 0 won or
-// not and after that disabled all the other fields
-else if ((b1 == '0' || b1 == '0') && (b2 == '0' ||
-	b2 == '0') && (b3 == '0' || b3 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b1 == '0' || b1 == '0') && (b4 == '0' ||
-	b4 == '0') && (b7 == '0' || b7 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b7 == '0' || b7 == '0') && (b8 == '0' ||
-	b8 == '0') && (b9 == '0' || b9 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b3 == '0' || b3 == '0') && (b6 == '0' ||
-	b6 == '0') && (b9 == '0' || b9 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b1 == '0' || b1 == '0') && (b5 == '0' ||
-	b5 == '0') && (b9 == '0' || b9 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b3 == '0' || b3 == '0') && (b5 == '0' ||
-	b5 == '0') && (b7 == '0' || b7 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b2 == '0' || b2 == '0') && (b5 == '0' ||
-	b5 == '0') && (b8 == '0' || b8 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
-}
-else if ((b4 == '0' || b4 == '0') && (b5 == '0' ||
-	b5 == '0') && (b6 == '0' || b6 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Player 0 won";
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	document.getElementById("box").disabled = true;
-	window.alert('Player 0 won');
+function handleClick(e) {
+  const cell = e.target
+  const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
+  placeMark(cell, currentClass)
+  if (checkWin(currentClass)) {
+    endGame(false)
+  } else if (isDraw()) {
+    endGame(true)
+  } else {
+    swapTurns()
+    setBoardHoverClass()
+  }
 }
 
-// Checking of Player 0 finish
-// Here, Checking about Tie
-else if ((b1 == 'X' || b1 == '0') && (b2 == 'X'
-	|| b2 == '0') && (b3 == 'X' || b3 == '0') &&
-	(b4 == 'X' || b4 == '0') && (b5 == 'X' ||
-		b5 == '0') && (b6 == 'X' || b6 == '0') &&
-	(b7 == 'X' || b7 == '0') && (b8 == 'X' ||
-		b8 == '0') && (b9 == 'X' || b9 == '0')) {
-	document.getElementById('print')
-		.innerHTML = "Match Tie";
-	window.alert('Match Tie');
-}
-else {
-
-	// Here, Printing Result
-	if (flag == 1) {
-		document.getElementById('print')
-			.innerHTML = "Player X Turn";
-	}
-	else {
-		document.getElementById('print')
-			.innerHTML = "Player 0 Turn";
-	}
-}*/
-
-
-
-
-
-// Function to reset game
-function myfunc_2() {
-	location.reload();
-	document.getElementById('box 1').value = '';
-	document.getElementById("box 2").value = '';
-	document.getElementById("box 3").value = '';
-	document.getElementById("box 4").value = '';
-	document.getElementById("box 5").value = '';
-	document.getElementById("box 6").value = '';
-	document.getElementById("box 7").value = '';
-	document.getElementById("box 8").value = '';
-	document.getElementById("box 9").value = '';
-
+function endGame(draw) {
+  if (draw) {
+    winningMessageTextElement.innerText = 'Draw!'
+  } else {
+    winningMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} Wins!`
+  }
+  winningMessageElement.classList.add('show')
 }
 
+function isDraw() {
+  return [...cellElements].every(cell => {
+    return cell.classList.contains(X_CLASS) || cell.classList.contains(CIRCLE_CLASS)
+  })
+}
 
+function placeMark(cell, currentClass) {
+  cell.classList.add(currentClass)
+}
 
+function swapTurns() {
+  circleTurn = !circleTurn
+}
 
+function setBoardHoverClass() {
+  board.classList.remove(X_CLASS)
+  board.classList.remove(CIRCLE_CLASS)
+  if (circleTurn) {
+    board.classList.add(CIRCLE_CLASS)
+  } else {
+    board.classList.add(X_CLASS)
+  }
+}
+
+function checkWin(currentClass) {
+  return WINNING_COMBINATIONS.some(combination => {
+    return combination.every(index => {
+      return cellElements[index].classList.contains(currentClass)
+    })
+  })
+}
